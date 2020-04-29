@@ -20,18 +20,18 @@ if __name__ == '__main__':
     eps2 = 2.2
     d2 = 0.04
     samplebegin2 = sampleend1
-    sampleend2 = samplebegin2 + int(d1 / dx)
+    sampleend2 = samplebegin2 + int(d2 / dx)
 
     eps3 = 4
     d3 = 0.06
     samplebegin3 = sampleend2
-    sampleend3 = samplebegin3 + int(d1 / dx)
+    sampleend3 = samplebegin3 + int(d3 / dx)
 
     eps4 = 4.5
     samplebegin4 = sampleend3
 
     # Размер области моделирования
-    x = 0.3
+    x = 0.35
 
     # Число Куранта
     Sc = 1.0
@@ -61,7 +61,6 @@ if __name__ == '__main__':
     eps[samplebegin2:] = eps2
     eps[samplebegin3:] = eps3
     eps[samplebegin4:] = eps4
-
     Ez = numpy.zeros(maxSize)
     Hy = numpy.zeros(maxSize - 1)
 
@@ -130,7 +129,7 @@ if __name__ == '__main__':
     tools.showProbeSignals(probes, -1.1, 1.1, dt)
 
     # Размера БПФ
-    size = 4096
+    size = 4096*2
 
     # Выдедение падающего поля из датчика на 80 отсчете
     FallField = numpy.zeros(maxTime)
@@ -141,7 +140,7 @@ if __name__ == '__main__':
     FallSpectr = fft.fftshift(FallSpectr)
 
     # Нахождение БПФ отраженного поля
-    ScatteredSpectr = abs(fft.fft(probes[0].E, size))
+    ScatteredSpectr =abs(fft.fft(probes[0].E, size))
     ScatteredSpectr = fft.fftshift(ScatteredSpectr)
 
     # шаг по частоте и определение частотной оси
@@ -160,7 +159,7 @@ if __name__ == '__main__':
 
     # Определени коэффициента отражения и построения графика
     plt.figure()
-    plt.plot(f * 1e-9, ScatteredSpectr / FallSpectr)
+    plt.plot(f * 1e-9, (ScatteredSpectr / FallSpectr))
     plt.xlim(0, 10e9 * 1e-9)
     plt.ylim(0, 0.4)
     plt.grid()
