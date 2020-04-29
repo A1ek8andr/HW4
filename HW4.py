@@ -122,8 +122,10 @@ if __name__ == '__main__':
         for probe in probes:
             probe.addData(Ez, Hy)
 
-        if t % 1000 == 0:
+        if t % 10 == 0:
             display.updateData(display_field, t)
+
+    display.stop()
 
     # Отображение сигнала, сохраненного в датчиках
     tools.showProbeSignals(probes, -1.1, 1.1, dt)
@@ -147,7 +149,7 @@ if __name__ == '__main__':
     df = 1 / (size * dt)
     f = numpy.arange(-(size / 2) * df, (size / 2) * df, df)
 
-    # Построение спектра падющего и рассеяного поля
+    # Построение спектра падающего и рассеянного поля
     plt.figure()
     plt.plot(f * 1e-9, FallSpectr / numpy.max(FallSpectr))
     plt.plot(f * 1e-9, ScatteredSpectr / numpy.max(ScatteredSpectr))
@@ -157,7 +159,7 @@ if __name__ == '__main__':
     plt.ylabel('|S/Smax|')
     plt.legend(['Спектр падающего поля', 'Спектр отраженного поля'])
 
-    # Определени коэффициента отражения и построения графика
+    # Определение коэффициента отражения и построения графика
     plt.figure()
     plt.plot(f * 1e-9, (ScatteredSpectr / FallSpectr))
     plt.xlim(0, 10e9 * 1e-9)
